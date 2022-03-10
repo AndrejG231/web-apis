@@ -9,16 +9,17 @@ import { randomColor } from "../util/random-color"
 type NavItemProps = {
   path: string
   name: string
+  color: string
 }
 
-const NavItem: FC<NavItemProps> = ({ path, name }) => {
+const NavItem: FC<NavItemProps> = ({ path, name, color }) => {
   return (
     <GridItem>
       <Link href={path}>
         <Button
           w="200px"
           h="100px"
-          background={randomColor()}
+          background={color}
           borderRadius="10px"
           color="white"
           _hover={{ background: "white", color: "black" }}
@@ -40,7 +41,12 @@ const NavbarContent = () => {
         {Object.values(apis).map(
           (api) =>
             api.path !== "/un" && (
-              <NavItem path={api.path} name={api.name} key={api.path} />
+              <NavItem
+                key={api.path}
+                path={api.path}
+                name={api.name}
+                color={api.color}
+              />
             )
         )}
       </SimpleGrid>
@@ -54,6 +60,8 @@ type Props = {
 
 const Navbar: FC<Props> = ({ preserveOpened = false }) => {
   const [isMenuOpen, setIsOpenMenu] = useBoolean(preserveOpened)
+
+  console.log(apis)
 
   return (
     <>

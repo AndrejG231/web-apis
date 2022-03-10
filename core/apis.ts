@@ -1,3 +1,5 @@
+import { withRandomColor } from "../util/random-color"
+
 const apis = {
   "background-fetch": {
     name: "Background Fetch API",
@@ -98,4 +100,6 @@ const apis = {
   a94key: { name: "XMLHttpRequest", path: "/un" },
 }
 
-export { apis }
+const withColors = withRandomColor(apis)
+
+export { withColors as apis }
