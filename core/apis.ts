@@ -3,11 +3,11 @@ import { withRandomColor } from "../util/random-color"
 const apis = {
   "background-fetch": {
     name: "Background Fetch API",
-    path: "/background-fetch",
+    path: "/un",
   },
   a2key: { name: "Background Tasks", path: "/un" },
   a3key: { name: "Barcode Detection API", path: "/un" },
-  a4key: { name: "Battery API", path: "/un" },
+  a4key: { name: "Battery API", path: "/battery-api" },
   a5key: { name: "Beacon", path: "/un" },
   a6key: { name: "Bluetooth API", path: "/un" },
   a7key: { name: "Broadcast Channel API", path: "/un" },
