@@ -56,15 +56,7 @@ const Navbar: FC<Props> = ({ preserveOpened = false }) => {
   const [isMenuOpen, setIsOpenMenu] = useBoolean(preserveOpened)
 
   return (
-    <Box
-      background={"teal.100"}
-      h="100vh"
-      w="100%"
-      position={"fixed"}
-      top={0}
-      zIndex={-1}
-      overflowY="auto"
-    >
+    <>
       {/* Show toggle button */}
       {preserveOpened || (
         <Button
@@ -73,13 +65,27 @@ const Navbar: FC<Props> = ({ preserveOpened = false }) => {
           top="10px"
           right="15px"
           onClick={setIsOpenMenu.toggle}
+          zIndex={2}
         >
           {isMenuOpen ? "Close" : "Menu"}
         </Button>
       )}
-      {/* Show menu */}
-      {isMenuOpen && <NavbarContent />}
-    </Box>
+      {isMenuOpen && (
+        <Box
+          background={"teal.100"}
+          h="100vh"
+          w="100%"
+          position={"fixed"}
+          top={0}
+          left={0}
+          zIndex={1}
+          overflowY="auto"
+        >
+          {/* Show menu */}
+          <NavbarContent />
+        </Box>
+      )}
+    </>
   )
 }
 

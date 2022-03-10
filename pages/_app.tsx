@@ -1,7 +1,8 @@
 import type { AppProps } from "next/app"
-import { Box, ChakraProvider, GlobalStyle } from "@chakra-ui/react"
+import { ChakraProvider } from "@chakra-ui/react"
+import { Navbar } from "../components/Navbar"
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <ChakraProvider>
       <Component {...pageProps} />
