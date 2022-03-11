@@ -1,56 +1,39 @@
 import { Text, Button, VStack, Tooltip } from "@chakra-ui/react"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { Code } from "../../components/Markdown"
 
-// React component showing battery status
-const BatteryApi = () => {
-  const battery = useRef<any>(null)
+const useBatteryInfo = () => {
+  const [batteryState, setBatteryState] = useState({
+    charging: null,
+    level: null,
+    chargingtime: null,
+    dischargingtime: null
+  })
 
-  const [charging, setCharging] = useState(false)
-  const [level, setLevel] = useState(false)
-  const [chargingTime, setChargingTime] = useState(0)
-  const [dischargingTime, setDischarginTime] = useState(0)
+  const handleChange = (event) => {
+    const type = event.type.replace("change", "")
+    const value = event.target[type]
 
-  const updateChargeInfo = useCallback(() => {
-    battery.current && setCharging(battery.current.charging)
-  }, [battery])
-  const updateLevelInfo = useCallback(() => {
-    battery.current && setLevel(battery.current.level)
-  }, [battery])
-  const updateChargingInfo = useCallback(() => {
-    battery.current && setChargingTime(battery.current.chargingTime)
-  }, [battery])
-
-  const updateDischargingInfo = useCallback(() => {
-    battery.current && setDischarginTime(battery.current.dischargingTime)
-  }, [battery])
-
-  const updateAllBatteryInfo = () => {
-    updateChargeInfo()
-    updateLevelInfo()
-    updateChargingInfo()
-    updateDischargingInfo()
+    setBatteryState((state) => ({...state, [type]: value}))
   }
 
-  const initBattery = useCallback(async () => {
+  const initBattery = async () => {
     const instance = await navigator.getBattery()
     if(!instance) return 
 
-    battery.addEventListener("chargingchange", () => {
-      updateChargeInfo()
-    })
-    battery.addEventListener("levelchange", () => {
-      updateLevelInfo()
-    })
-    battery.addEventListener("chargingtimechange", () => {
-      updateChargingInfo()
-    })
-    battery.addEventListener("dischargingtimechange", () => {
-      updateDischargingInfo()
-    })
+    instance.addEventListener("chargingchange", handleChange)
+    instance.addEventListener("levelchange", handleChange)
+    instance.addEventListener("chargingtimechange", handleChange)
+    instance.addEventListener("dischargingtimechange", handleChange)
 
-    updateAllBatteryInfo()
-  }, [battery])
+  }
+
+  
+}
+
+// React component showing battery status
+const BatteryApi = () => {
+
+
 
   useEffect(() => {
       initBattery()
