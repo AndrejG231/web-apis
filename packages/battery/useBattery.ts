@@ -1,22 +1,23 @@
 import { useLayoutEffect, useState } from "react"
 import { initialize } from "./initialize"
-import { IntializedBattery } from "./types"
+import { BatteryInstanceHookResult, IntializedBattery } from "./types"
 
 /**
  * Hook loads battery Api
- * @returns { Object(Intialized) {isSupported: boolean, battery: BatteryInstance}}
+ * @returns { supported: boolean, loading: boolean, battery: BatteryInstance }
  */
 
-const useBattery = (): IntializedBattery => {
-  const [batteryInfo, setBatteryInfo] = useState<IntializedBattery>({
-    isSupported: false,
+const useBattery = (): BatteryInstanceHookResult => {
+  const [batteryInfo, setBatteryInfo] = useState<BatteryInstanceHookResult>({
+    supported: false,
     battery: null,
+    loading: true,
   })
 
   useLayoutEffect(() => {
-    initialize().then(({ isSupported, battery }) => {
-      if (isSupported) {
-        setBatteryInfo({ isSupported, battery })
+    initialize().then(({ supported, battery }) => {
+      if (supported) {
+        setBatteryInfo({ supported, battery, loading: false })
       }
     })
   }, [setBatteryInfo])

@@ -2,9 +2,7 @@ export type BatteryEvent = {
   target: BatteryInstance
 }
 
-export type BatteryEventHandler = {
-  (event: BatteryEvent): unknown
-}
+export type BatteryEventHandler = (event: BatteryEvent) => unknown
 
 export type BatteryStatus = {
   readonly charging: boolean
@@ -13,12 +11,20 @@ export type BatteryStatus = {
   readonly level: number
 }
 
+export type BatteryEventTypes = `change${keyof BatteryStatus}`
+
+export type BatteryEventlistener = (
+  event: BatteryEventTypes,
+  handler: BatteryEventHandler
+) => void
+
 export type BatteryInstance = {
-  onchargingchange: any
-  onchargingtimechange: any
-  ondischargingtimechange: any
-  onlevelchange: any
-  addEventListener: BatteryEventHandler
+  onchargingchange: BatteryEventHandler
+  onchargingtimechange: BatteryEventHandler
+  ondischargingtimechange: BatteryEventHandler
+  onlevelchange: BatteryEventHandler
+  addEventListener: BatteryEventlistener
+  removeEventListener: BatteryEventlistener
 } & BatteryStatus
 
 type SuccessInstance = {
@@ -28,17 +34,26 @@ type ErrorInstance = {
   battery: null
 }
 type Supported = {
-  isSupported: true
+  supported: true
 }
 type NotSupported = {
-  isSupported: false
+  supported: false
+}
+type Loading = {
+  loading: boolean
+}
+type Update = {
+  update: () => void
 }
 
+export type IntializedBattery =
+  | (Supported & SuccessInstance)
+  | (NotSupported & ErrorInstance)
 
-export type IntializedBattery = | (Supported & SuccessInstance) | (NotSupported & ErrorInstance)
+export type IntializedBatteryInfo =
+  | (Supported & BatteryStatus)
+  | (NotSupported & { [K in keyof BatteryStatus]: null })
 
-export type BatteryInfoHookResult = ({
-  isSupported: false
-} & { [Stats in keyof BatteryStatus]: null }) | {
-  isSupported: 
-}
+export type BatteryInstanceHookResult = Loading & IntializedBattery
+
+export type BatteryInfo = Update & Loading & IntializedBatteryInfo

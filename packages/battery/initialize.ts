@@ -10,10 +10,10 @@ const initialize = async (): Promise<IntializedBattery> => {
     instance.hasOwnProperty("dischargingTime") &&
     instance.hasOwnProperty("level")
   ) {
-    return { isSupported: true, battery: instance }
+    return { supported: true, battery: instance }
   }
 
-  return { isSupported: false, battery: null }
+  return { supported: false, battery: null }
 }
 
 export { initialize }
