@@ -10,8 +10,12 @@ import {
   SubTitle,
   Title,
 } from "../../components/Markdown"
-import { BatteryInfo } from "./_usage"
-import { useBatteryHookSnippet } from "./_snippets"
+import { BatteryInfo1, BatteryInfo2, BatteryInfo3 } from "./_usage"
+import {
+  useBatteryHookSnippet,
+  useBatteryInfo1,
+  useBatteryInfo3,
+} from "./_snippets"
 
 const mdnSrc =
   "http://developer.mozilla.org/en-US/docs/Web/API/Background_Fetch_API"
@@ -43,7 +47,34 @@ const BackgroundPage: NextPage = () => {
       <Code>{useBatteryHookSnippet}</Code>
       <Space>20px</Space>
       <Box background={"blue.100"} p={5}>
-        <BatteryInfo />
+        <BatteryInfo1 />
+      </Box>
+      <Space>10px</Space>
+      <Space>20px</Space>
+
+      {/* Use battery info hook */}
+      <SubTitle>useBatteryInfo hook</SubTitle>
+      <Description>
+        If you do not need whole battery instance, you can make things simpler
+        with accessing battery info directly.
+      </Description>
+      <Code>{useBatteryInfo1}</Code>
+      <Space>20px</Space>
+      <Box background={"blue.100"} p={5}>
+        <BatteryInfo2 />
+      </Box>
+      <Space>10px</Space>
+      {/* Use battery info hook with subscribe */}
+      <SubTitle />
+      <Space>10px</Space>
+      <Description>
+        useBatteryInfo hook takes also optional subscribe parameters, which will
+        automatically update values when specified battery status changes.
+      </Description>
+      <Code>{useBatteryInfo3}</Code>
+      <Space>20px</Space>
+      <Box background={"blue.100"} p={5}>
+        <BatteryInfo3 />
       </Box>
       <Space>10px</Space>
     </Content>
