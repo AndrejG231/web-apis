@@ -53,7 +53,7 @@ const useBatteryInfo = (
       // Subscribe to specific changes
       subscribe.forEach((event) => {
         instanceRef.current?.addEventListener(
-          `${event}change`,
+          `${event.toLowerCase() as Lowercase<typeof event>}change`,
           updateBatteryInfo
         )
       })
@@ -62,7 +62,7 @@ const useBatteryInfo = (
       // Clear event listeners
       subscribe.forEach((event) => {
         instanceRef.current?.removeEventListener(
-          `${event}change`,
+          `${event.toLowerCase() as Lowercase<typeof event>}change`,
           updateBatteryInfo
         )
       })
