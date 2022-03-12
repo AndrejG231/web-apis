@@ -42,9 +42,6 @@ type NotSupported = {
 type Loading = {
   loading: boolean
 }
-type Update = {
-  update: () => void
-}
 
 export type IntializedBattery =
   | (Supported & SuccessInstance)
@@ -56,4 +53,7 @@ export type IntializedBatteryInfo =
 
 export type BatteryInstanceHookResult = Loading & IntializedBattery
 
-export type BatteryInfo = Update & Loading & IntializedBatteryInfo
+export type BatteryInfoHookResult = [
+  Loading & IntializedBatteryInfo,
+  () => void
+]
