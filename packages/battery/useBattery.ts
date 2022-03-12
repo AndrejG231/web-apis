@@ -18,6 +18,8 @@ const useBattery = (): BatteryInstanceHookResult => {
     initialize().then(({ supported, battery }) => {
       if (supported) {
         setBatteryInfo({ supported, battery, loading: false })
+      } else {
+        setBatteryInfo((current) => ({ ...current, loading: false }))
       }
     })
   }, [setBatteryInfo])

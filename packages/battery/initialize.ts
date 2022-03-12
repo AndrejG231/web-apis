@@ -4,11 +4,14 @@ const initialize = async (): Promise<IntializedBattery> => {
   //@ts-ignore
   const instance: BatteryInstance = await navigator.getBattery()
 
+  console.log(instance.hasOwnProperty("charging"))
+  console.log(instance)
+
   if (
-    instance.hasOwnProperty("charging") &&
-    instance.hasOwnProperty("chargingTime") &&
-    instance.hasOwnProperty("dischargingTime") &&
-    instance.hasOwnProperty("level")
+    typeof instance.charging === "boolean" &&
+    typeof instance.chargingTime === "number" &&
+    typeof instance.dischargingTime === "number" &&
+    typeof instance.level === "number"
   ) {
     return { supported: true, battery: instance }
   }
