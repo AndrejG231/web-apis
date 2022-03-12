@@ -6,10 +6,12 @@ import {
   Content,
   Description,
   Docs,
+  Space,
   SubTitle,
   Title,
 } from "../../components/Markdown"
-import { BatteryApi } from "./_usage"
+import { BatteryInfo } from "./_usage"
+import { useBatteryHookSnippet } from "./_snippets"
 
 const mdnSrc =
   "http://developer.mozilla.org/en-US/docs/Web/API/Background_Fetch_API"
@@ -34,10 +36,16 @@ const BackgroundPage: NextPage = () => {
           },
         ]}
       </Docs>
-
-      <SubTitle>Example Code</SubTitle>
-      <Code></Code>
-      <BatteryApi />
+      <Space>10px</Space>
+      {/* Use battery hook */}
+      <SubTitle>useBattery hook</SubTitle>
+      <Description>Returns battery instance to your component.</Description>
+      <Code>{useBatteryHookSnippet}</Code>
+      <Space>20px</Space>
+      <Box background={"blue.100"} p={5}>
+        <BatteryInfo />
+      </Box>
+      <Space>10px</Space>
     </Content>
   )
 }

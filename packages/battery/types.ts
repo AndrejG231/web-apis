@@ -11,7 +11,7 @@ export type BatteryStatus = {
   readonly level: number
 }
 
-export type BatteryEventTypes = `change${keyof BatteryStatus}`
+export type BatteryEventTypes = `${keyof BatteryStatus}change`
 
 export type BatteryEventlistener = (
   event: BatteryEventTypes,

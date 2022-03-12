@@ -56,3 +56,7 @@ export const Code: FC = ({ children }) => (
     </ChakraCode>
   </Center>
 )
+
+export const Space = ({ children }: { children: number | string }) => (
+  <Box h={children} />
+)
