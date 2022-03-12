@@ -10,9 +10,10 @@ type NavItemProps = {
   path: string
   name: string
   color: string
+  onClick: () => void
 }
 
-const NavItem: FC<NavItemProps> = ({ path, name, color }) => {
+const NavItem: FC<NavItemProps> = ({ path, name, color, onClick }) => {
   return (
     <GridItem>
       <Link href={path}>
@@ -24,6 +25,7 @@ const NavItem: FC<NavItemProps> = ({ path, name, color }) => {
           color="white"
           _hover={{ background: "white", color: "black" }}
           whiteSpace="break-spaces"
+          onClick={onClick}
         >
           <Text align={"center"} fontWeight={700}>
             {name}
@@ -34,7 +36,7 @@ const NavItem: FC<NavItemProps> = ({ path, name, color }) => {
   )
 }
 
-const NavbarContent = () => {
+const NavbarContent = ({ onItemClick }: { onItemClick: () => void }) => {
   return (
     <Container maxW="container.xl">
       <SimpleGrid w="100%" my={10} columns={[1, 2, 3, 4, 5]} gap={"10px"}>
@@ -46,6 +48,7 @@ const NavbarContent = () => {
                 path={api.path}
                 name={api.name}
                 color={api.color}
+                onClick={onItemClick}
               />
             )
         )}
@@ -60,8 +63,6 @@ type Props = {
 
 const Navbar: FC<Props> = ({ preserveOpened = false }) => {
   const [isMenuOpen, setIsOpenMenu] = useBoolean(preserveOpened)
-
-  console.log(apis)
 
   return (
     <>
@@ -90,7 +91,7 @@ const Navbar: FC<Props> = ({ preserveOpened = false }) => {
           overflowY="auto"
         >
           {/* Show menu */}
-          <NavbarContent />
+          <NavbarContent onItemClick={setIsOpenMenu.off} />
         </Box>
       )}
     </>
