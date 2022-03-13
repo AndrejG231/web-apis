@@ -1,5 +1,17 @@
 export type BatteryEvent = {
+  isTrusted: boolean
+  bubbles: boolean
+  cancelBubble: boolean
+  cancelable: boolean
+  composed: boolean
+  currentTarget: BatteryInstance
+  defaultPrevented: boolean
+  eventPhase: number
+  returnValue: boolean
+  srcElement: BatteryInstance
   target: BatteryInstance
+  timeStamp: number
+  type: BatteryEventTypes
 }
 
 export type BatteryEventHandler = (event: BatteryEvent) => unknown
