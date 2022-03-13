@@ -1,6 +1,6 @@
 import { NextPage } from "next"
 import { inContainerWithNav } from "../../layouts/container-with-nav"
-import { Box } from "@chakra-ui/react"
+import { Box, ListItem, UnorderedList } from "@chakra-ui/react"
 import {
   Code,
   Content,
@@ -12,13 +12,28 @@ import {
 } from "../../components/Markdown"
 import { BatteryInfo1, BatteryInfo2, BatteryInfo3 } from "./_usage"
 import {
+  batteryEventHandlerInterface,
+  batteryEventListener,
+  batteryInstanceInterface,
+  useBatteryHook,
   useBatteryHookSnippet,
   useBatteryInfo1,
   useBatteryInfo3,
+  useBatteryInfoHook,
 } from "./_snippets"
+import { BatteryStatus } from "../../packages/battery/types"
 
-const mdnSrc =
-  "http://developer.mozilla.org/en-US/docs/Web/API/Background_Fetch_API"
+const MDN_DOCS = {
+  path: "https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API",
+  source: "MDN",
+}
+
+const EVENTS: (keyof BatteryStatus)[] = [
+  "chargingTime",
+  "charging",
+  "dischargingTime",
+  "level",
+]
 
 const BackgroundPage: NextPage = () => {
   return (
@@ -32,14 +47,7 @@ const BackgroundPage: NextPage = () => {
         usage to reduce battery drain when the battery is low, or to save
         changes before the battery runs out in order to prevent data loss.
       </Description>
-      <Docs>
-        {[
-          {
-            path: "https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API",
-            source: "MDN",
-          },
-        ]}
-      </Docs>
+      <Docs>{[MDN_DOCS]}</Docs>
       <Space>10px</Space>
       {/* Use battery hook */}
       <SubTitle>useBattery hook</SubTitle>
@@ -77,6 +85,32 @@ const BackgroundPage: NextPage = () => {
         <BatteryInfo3 />
       </Box>
       <Space>10px</Space>
+      <SubTitle>Supported events</SubTitle>
+      <UnorderedList>
+        {EVENTS.map((event) => (
+          <ListItem key={event}>{event}</ListItem>
+        ))}
+      </UnorderedList>
+      <Space>10px</Space>
+      <Title>Interfaces</Title>
+      <SubTitle>useBattery hook</SubTitle>
+      <Code>{useBatteryHook}</Code>
+      <SubTitle>useBatteryInfo hook</SubTitle>
+      <Code>{useBatteryInfoHook}</Code>
+      <SubTitle>Battery instance</SubTitle>
+      <Code>{batteryInstanceInterface}</Code>
+      <SubTitle>Battery event listener</SubTitle>
+      <Code>{batteryEventListener}</Code>
+      <SubTitle>Battery event handler</SubTitle>
+      <Code>{`(event: BatteryEvent) => unknown`}</Code>
+      <SubTitle>Battery event types</SubTitle>
+      <Code>
+        chargingchange | chargingtimechange | dischargingtimechange |
+        levelchange
+      </Code>
+      <SubTitle>Battery event</SubTitle>
+      <Code>{batteryEventHandlerInterface}</Code>
+      <Space>40px</Space>
     </Content>
   )
 }
