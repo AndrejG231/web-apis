@@ -40,7 +40,7 @@ export const Docs = ({
       Official Documentations:
     </Text>
     {children.map(({ source, path }) => (
-      <Tooltip label={`Open documentation.`}>
+      <Tooltip key={source + path} label={`Open documentation.`}>
         <a href={path} target="_blank">
           <Button>{source}</Button>
         </a>
